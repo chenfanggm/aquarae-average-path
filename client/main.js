@@ -1,4 +1,3 @@
-'use strict'
 import * as THREE from 'three'
 import dat from 'dat-gui'
 import _ from 'lodash'
@@ -9,6 +8,7 @@ import config from '../config'
 import './styles/main.scss'
 import getBigBall from './components/getBigBall'
 import getSmallBall from './components/getSmallBall'
+
 
 // object collection
 let MODEL_POOL = {}
