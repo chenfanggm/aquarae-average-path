@@ -14,9 +14,10 @@ class ServiceManager {
 
   get(serviceName) {
     if (this.services[serviceName]) return this.services[serviceName]
-    else if (!this.services[serviceName]) throw new Error(`service ${serviceName} not exist`)
+    else if (!this.availables[serviceName]) throw new Error(`service ${serviceName} not exist`)
     else {
       this.services[serviceName] = new this.availables[serviceName]()
+      return this.services[serviceName]
     }
   }
 }

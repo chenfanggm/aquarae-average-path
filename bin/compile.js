@@ -1,6 +1,6 @@
 const fs = require('fs-extra')
 const webpack = require('webpack')
-const webpackConfig = require('../../steven-three-starter-kit/build/webpack.config')
+const webpackConfig = require('../build/webpack.config')
 const debug = require('debug')('app:bin:compile')
 const config = require('../config')
 

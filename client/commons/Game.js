@@ -15,6 +15,13 @@ class Game {
     this.height = height
     this.devicePixelRatio = window.devicePixelRatio || 1
 
+    // renderer
+    this.renderer = new THREE.WebGLRenderer({ antialias: true })
+    this.renderer.gammaInput = true
+    this.renderer.gammaOutput = true
+    this.renderer.setSize(this.width, this.height)
+    this.renderer.setClearColor(this.bgColor, 1)
+
     // camera
     this.cameraFov = 45
     this.cameraAspect = this.width/this.height
@@ -25,17 +32,13 @@ class Game {
     this.cameraControls = new THREE.OrbitAndPanControls(this.camera, this.renderer.domElement)
     this.cameraControls.target.set(0,0,0)
 
-    // renderer
-    this.renderer = new THREE.WebGLRenderer({ antialias: true })
-    this.renderer.gammaInput = true
-    this.renderer.gammaOutput = true
-    this.renderer.setSize(this.width, this.height)
-    this.renderer.setClearColor(this.bgColor, 1)
     this.clock = new THREE.Clock()
     this.textureLoader = new THREE.TextureLoader()
 
     this.sceneService = serviceManager.get('sceneService')
     this.objectService = serviceManager.get('objectService')
+
+    this.animate = this.animate.bind(this)
   }
 
   start() {
@@ -50,7 +53,10 @@ class Game {
   }
 
   init() {
-    this.curScene.render()
+    this.sceneService.getAll().forEach((scene) => {
+      scene.init()
+    })
+    this.render()
     this.canvasDom.appendChild(this.renderer.domElement)
   }
 
@@ -68,29 +74,19 @@ class Game {
 
   clear() {
     // clean animation
-    if (this.runningLoop) {
+    if (this.runningLoop)
       cancelAnimationFrame(this.runningLoop)
-    }
 
     // clean scene objects
-    if (this.curScene.children) {
-      this.curScene.children.forEach((obj) => {
-        this.curScene.remove(obj)
-      })
-    }
-    const objects = this.objectService.getAll()
-    objects.forEach((obj) => {
-      this.curScene.remove(obj)
-    })
-    this.objectService.clearAll()
+    if (this.curScene)
+      this.curScene.clear()
 
     // clean GUI
     $('.dg.ac').empty()
 
     // clean canvas
-    if (this.canvasDom.childNodes[0]) {
+    if (this.canvasDom.childNodes[0])
       this.canvasDom.removeChild(this.canvasDom.childNodes[0])
-    }
   }
 
   setCurScene(scene) {

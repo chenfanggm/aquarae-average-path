@@ -13,6 +13,5 @@ averagePath.start()
 
 // Hot module replace setting
 if (config.env === 'development' && module.hot) {
-  console.log('hi1')
   module.hot.accept()
 }
