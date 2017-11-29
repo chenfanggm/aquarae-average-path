@@ -18,8 +18,7 @@ if (__DEV__) {
 const webpackConfig = {
   entry: {
     main: mainEntry,
-    vendor: config.compilerVendors,
-    normalize: [paths.client('normalize')]
+    vendor: config.compilerVendors
   },
   output: {
     path: paths.dist(),
@@ -31,7 +30,7 @@ const webpackConfig = {
       paths.client(),
       'node_modules'
     ],
-    extensions: ['*', '.js', '.jsx', '.json']
+    extensions: ['*', '.js', '.json']
     // alias: {}
   },
   devtool: config.compilerSourceMap,
@@ -223,7 +222,7 @@ if (!__TEST__) {
   debug('Enable plugins for bundle split.')
   webpackConfig.plugins.push(
     new webpack.optimize.CommonsChunkPlugin({
-      names: ['vendor', 'normalize']
+      names: ['vendor']
     })
   )
 }

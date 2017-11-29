@@ -5,18 +5,18 @@ import ObjectService from './ObjectService'
 class ServiceManager {
   constructor() {
     this.availables = {
-      sceneService: new SceneService(),
-      objectService: new ObjectService()
+      sceneService: SceneService,
+      objectService: ObjectService
     }
 
     this.services = {}
   }
 
-  getService(serviceName) {
+  get(serviceName) {
     if (this.services[serviceName]) return this.services[serviceName]
     else if (!this.services[serviceName]) throw new Error(`service ${serviceName} not exist`)
     else {
-      this.services[serviceName] = this.availables[serviceName].init()
+      this.services[serviceName] = new this.availables[serviceName]()
     }
   }
 }

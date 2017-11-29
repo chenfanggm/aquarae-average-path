@@ -3,8 +3,8 @@ import config from '../config'
 import webpack from 'webpack'
 import webpackConfig from '../../steven-three-starter-kit/build/webpack.config'
 import express from 'express'
-import cookieParser from 'cookie-parser';
-import bodyParser from 'body-parser';
+import cookieParser from 'cookie-parser'
+import bodyParser from 'body-parser'
 import httpStatus from 'http-status'
 import errorHandler from './express-middleware/errorHandler'
 import APIError from './APIError'

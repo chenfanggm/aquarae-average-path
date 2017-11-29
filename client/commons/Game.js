@@ -7,22 +7,23 @@ class Game {
   constructor(opts = {}) {
     const { canvasDom, width, height, bgColor  } = opts
 
+    this.curScene = null
     this.runningLoop = null
     this.canvasDom = canvasDom
     this.bgColor = bgColor
-    this.curScene = new THREE.Scene()
     this.width = width
     this.height = height
     this.devicePixelRatio = window.devicePixelRatio || 1
 
     // camera
     this.cameraFov = 45
-    this.cameraAspect = width/height
+    this.cameraAspect = this.width/this.height
     this.cameraNear = 0.1
     this.cameraFar = 4000
     this.camera = new THREE.PerspectiveCamera(this.cameraFov, this.cameraAspect, this.cameraNear, this.cameraFar)
-    this.camera.position.set(20,20,70)
-    this.cameraControls.target.set(0,0,0);
+    this.camera.position.set(20, 20, 70)
+    this.cameraControls = new THREE.OrbitAndPanControls(this.camera, this.renderer.domElement)
+    this.cameraControls.target.set(0,0,0)
 
     // renderer
     this.renderer = new THREE.WebGLRenderer({ antialias: true })
@@ -30,12 +31,11 @@ class Game {
     this.renderer.gammaOutput = true
     this.renderer.setSize(this.width, this.height)
     this.renderer.setClearColor(this.bgColor, 1)
-    this.cameraControls = new THREE.OrbitAndPanControls(this.camera, this.renderer.domElement)
-    this.textureLoader = new THREE.TextureLoader()
     this.clock = new THREE.Clock()
+    this.textureLoader = new THREE.TextureLoader()
 
-    this.sceneService = serviceManager.getService('sceneService')
-    this.objectService = serviceManager.getService('objectService')
+    this.sceneService = serviceManager.get('sceneService')
+    this.objectService = serviceManager.get('objectService')
   }
 
   start() {
@@ -50,6 +50,7 @@ class Game {
   }
 
   init() {
+    this.curScene.render()
     this.canvasDom.appendChild(this.renderer.domElement)
   }
 
@@ -59,9 +60,10 @@ class Game {
   }
 
   render() {
-    const delta = this.clock.getDelta();
-    this.cameraControls.update(delta);
-    this.renderer.render(this.curScene, this.camera)
+    const delta = this.clock.getDelta()
+    this.cameraControls.update(delta)
+    this.curScene.render()
+    this.renderer.render(this.curScene.scene, this.camera)
   }
 
   clear() {
