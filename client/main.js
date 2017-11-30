@@ -13,5 +13,7 @@ averagePath.start()
 
 // Hot module replace setting
 if (config.env === 'development' && module.hot) {
-  module.hot.accept()
+  module.hot.accept('./main', () => {
+
+  })
 }

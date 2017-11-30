@@ -1,15 +1,15 @@
 import * as THREE from 'three'
-import '../../commons/libs/OrbitAndPanControls.new'
+import '../../../commons/libs/OrbitAndPanControls.new'
 import dat from 'dat-gui'
-import Scene from "../../commons/Scene";
-import getBigBall from '../../components/getBigBall'
-import getSmallBall from '../../components/getSmallBall'
-import _Coordinates from '../../commons/libs/Coordinates'
+import Scene from "../../../commons/Scene"
+import getBigBall from '../../../components/getBigBall'
+import getSmallBall from '../../../components/getSmallBall'
+import _Coordinates from '../../../commons/libs/Coordinates'
 
 
 class MainScene extends Scene {
-  constructor(opts) {
-    super(opts)
+
+  init() {
     this.coordinates = {
       gridX: false,
       gridY: false,
@@ -24,12 +24,7 @@ class MainScene extends Scene {
       newGround: this.coordinates.ground,
       newAxes: this.coordinates.axes
     }
-  }
-
-  init() {
-    this.fillScene()
-    this.drawGrids()
-    this.setupGUI()
+    this.setupScene()
   }
 
   render() {
@@ -44,10 +39,15 @@ class MainScene extends Scene {
       this.coordinates.gridZ = this.gui.newGridZ
       this.coordinates.ground = this.gui.newGround
       this.coordinates.axes = this.gui.newAxes
-      this.fillScene()
-      this.drawGrids()
-      this.setupGUI()
+      this.setupScene()
     }
+  }
+
+  setupScene() {
+    this.clear()
+    this.fillScene()
+    this.drawGrids()
+    this.setupGUI()
   }
 
   fillScene() {
@@ -65,7 +65,7 @@ class MainScene extends Scene {
     ambientLight.position.set(100, 100, 100)
     this.scene.add(ambientLight)
 
-    const directionalLight = new THREE.DirectionalLight(0xFFFFFF, 0.8);
+    const directionalLight = new THREE.DirectionalLight(0xFFFFFF, 0.8)
     directionalLight.position.set(100, 100, 100 )
     directionalLight.target = this.game.objectService.get('smallBall')
     this.scene.add(directionalLight)
@@ -75,30 +75,30 @@ class MainScene extends Scene {
     // show grids
     const Coordinates = _Coordinates(this.scene)
     if (this.coordinates.ground) {
-      Coordinates.drawGround({ size: 200 });
+      Coordinates.drawGround({ size: 200 })
     }
     if (this.coordinates.gridX) {
-      Coordinates.drawGrid({ size: 100, scale: 0.1 });
+      Coordinates.drawGrid({ size: 100, scale: 0.1 })
     }
     if (this.coordinates.gridY) {
-      Coordinates.drawGrid({ size: 100, scale: 0.1, orientation: 'y' });
+      Coordinates.drawGrid({ size: 100, scale: 0.1, orientation: 'y' })
     }
     if (this.coordinates.gridZ) {
-      Coordinates.drawGrid({ size: 100, scale: 0.1, orientation: 'z' });
+      Coordinates.drawGrid({ size: 100, scale: 0.1, orientation: 'z' })
     }
     if (this.coordinates.axes) {
-      Coordinates.drawAllAxes({axisLength: 25, axisRadius: 0.2, axisTess: 10});
+      Coordinates.drawAllAxes({axisLength: 25, axisRadius: 0.2, axisTess: 10})
     }
   }
 
   setupGUI() {
-    const gui = new dat.GUI();
-    const h = gui.addFolder('Grid display');
-    h.add(this.gui, 'newGridX').name('Show XZ grid');
-    h.add(this.gui, 'newGridY' ).name('Show YZ grid');
-    h.add(this.gui, 'newGridZ' ).name('Show XY grid');
-    h.add(this.gui, 'newGround' ).name('Show ground');
-    h.add(this.gui, 'newAxes' ).name('Show axes');
+    const gui = new dat.GUI()
+    const h = gui.addFolder('Grid display')
+    h.add(this.gui, 'newGridX').name('Show XZ grid')
+    h.add(this.gui, 'newGridY' ).name('Show YZ grid')
+    h.add(this.gui, 'newGridZ' ).name('Show XY grid')
+    h.add(this.gui, 'newGround' ).name('Show ground')
+    h.add(this.gui, 'newAxes' ).name('Show axes')
   }
 }
 

@@ -1,16 +1,15 @@
-import $ from 'jquery'
 import * as THREE from 'three'
 import serviceManager from '../services/serviceManager'
 
 
 class Game {
   constructor(opts = {}) {
-    const { canvasDom, width, height, bgColor  } = opts
+    const { canvasDom, width, height } = opts
 
     this.curScene = null
     this.runningLoop = null
     this.canvasDom = canvasDom
-    this.bgColor = bgColor
+    this.bgColor = 0xDDDDDD
     this.width = width
     this.height = height
     this.devicePixelRatio = window.devicePixelRatio || 1
@@ -42,14 +41,10 @@ class Game {
   }
 
   start() {
-    this.reload()
-  }
-
-  reload() {
     this.clear()
     this.init()
     this.runningLoop = this.animate()
-    console.info('engine reloaded')
+    console.info('Game started...')
   }
 
   init() {
@@ -80,9 +75,6 @@ class Game {
     // clean scene objects
     if (this.curScene)
       this.curScene.clear()
-
-    // clean GUI
-    $('.dg.ac').empty()
 
     // clean canvas
     if (this.canvasDom.childNodes[0])

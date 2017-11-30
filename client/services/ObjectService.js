@@ -4,6 +4,7 @@ class ObjectService {
   }
 
   add(id, object) {
+    if (this.objs[id]) throw new Error(`objectId ${id} already exist`)
     this.objs[id] = object
   }
 
@@ -14,6 +15,10 @@ class ObjectService {
 
   getAll() {
     return Object.values(this.objs)
+  }
+
+  clearAll() {
+    this.objs = {}
   }
 }
 
