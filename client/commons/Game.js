@@ -1,5 +1,5 @@
 import * as THREE from 'three'
-import serviceManager from '../services/serviceManager'
+import SceneManager from './SceneManager';
 
 
 class Game {
@@ -34,21 +34,24 @@ class Game {
     this.clock = new THREE.Clock()
     this.textureLoader = new THREE.TextureLoader()
 
-    this.sceneService = serviceManager.get('sceneService')
-    this.objectService = serviceManager.get('objectService')
+    this.sceneManager = new SceneManager()
 
     this.animate = this.animate.bind(this)
   }
 
-  start() {
+  reload() {
     this.clear()
+    this.start()
+  }
+
+  start() {
     this.init()
     this.runningLoop = this.animate()
     console.info('Game started...')
   }
 
   init() {
-    this.sceneService.getAll().forEach((scene) => {
+    this.sceneManager.getAll().forEach((scene) => {
       scene.init()
     })
     this.render()
@@ -71,11 +74,9 @@ class Game {
     // clean animation
     if (this.runningLoop)
       cancelAnimationFrame(this.runningLoop)
-
     // clean scene objects
     if (this.curScene)
       this.curScene.clear()
-
     // clean canvas
     if (this.canvasDom.childNodes[0])
       this.canvasDom.removeChild(this.canvasDom.childNodes[0])

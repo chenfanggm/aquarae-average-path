@@ -1,19 +1,29 @@
 import * as THREE from 'three'
-import $ from 'jquery'
+import ObjectManager from './ObjectManager';
+import GameObject from './GameObject';
 
 
 class Scene {
   constructor({ game }) {
     this.game = game
     this.scene = new THREE.Scene()
+    this.objects = new ObjectManager()
   }
 
   init() {
-    throw new Error('scene have to implement an init function')
+    this.objects.getAll().forEach((obj) => {
+      if (typeof obj.init === 'function') {
+        obj.init()
+      }
+    })
   }
 
   render() {
-    throw new Error('scene have to implement a render function')
+    this.objects.getAll().forEach((obj) => {
+      if (obj instanceof GameObject && typeof obj.render === 'function') {
+        obj.render(this.scene)
+      }
+    })
   }
 
   clear() {
@@ -23,18 +33,8 @@ class Scene {
         this.scene.remove(obj)
       })
     }
-    // remove all object in pool from scene
-    const objects = this.game.objectService.getAll()
-    objects.forEach((obj) => {
-      this.scene.remove(obj)
-    })
-
-    // clear object pool
-    this.game.objectService.clearAll()
-
-    // clean GUI
-    $('.dg.ac').empty()
-
+    // remove all objects from pool
+    this.objects.clearAll()
     // reset scene
     this.scene = new THREE.Scene()
   }
