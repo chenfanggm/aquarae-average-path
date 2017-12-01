@@ -1,6 +1,6 @@
 import dat from 'dat-gui'
 import * as THREE from 'three'
-import '../../../commons/libs/OrbitAndPanControls.new'
+import '../../../libs/OrbitAndPanControls.new'
 import Scene from '../../../commons/Scene'
 import BigBall from '../../../models/BigBall'
 
