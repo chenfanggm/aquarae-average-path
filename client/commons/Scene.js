@@ -28,11 +28,7 @@ class Scene {
   render() {
     this.objects.getAll().forEach((obj) => {
       if (obj instanceof GameObject) {
-        if (!obj.hidden) {
-          this.scene.add(obj.mesh)
-        } else {
-          this.scene.remove(obj.mesh)
-        }
+        obj.render(this.scene)
       } else if (!obj.hidden) {
         this.scene.add(obj)
       } else {

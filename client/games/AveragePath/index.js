@@ -6,14 +6,14 @@ import MainScene from './scenes/MainScene'
 class AveragePath extends Game {
 
   init() {
-    // camera
-    this.cameraFov = 45
-    this.cameraAspect = this.width/this.height
-    this.cameraNear = 0.1
-    this.cameraFar = 4000
-    this.mainCamera = new THREE.PerspectiveCamera(this.cameraFov, this.cameraAspect, this.cameraNear, this.cameraFar)
-    this.mainCamera.position.set(20, 20, 70)
-    this.objects.add('mainCamera', this.mainCamera)
+    // meta
+    this.width = window.innerWidth/1.2
+    this.height = window.innerHeight/1.2
+    this.devicePixelRatio = window.devicePixelRatio || 1
+    this.bgColor = 0xDDDDDD
+    this.renderer.setSize(this.width, this.height)
+    this.renderer.setClearColor(this.bgColor, 1)
+
 
     // scene
     const mainScene = new MainScene()

@@ -11,6 +11,10 @@ class GameObject extends THREE.Object3D {
   }
 
   update() {
+    throw new Error('Every game object must implement a update function')
+  }
+
+  render() {
     throw new Error('Every game object must implement a render function')
   }
 }

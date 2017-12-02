@@ -6,11 +6,9 @@ import AveragePath from './games/AveragePath'
 
 
 const canvasDom = document.getElementById('mainCanvas')
-const width = window.innerWidth/1.2
-const height = window.innerHeight/1.2
 
 if (Detector.webgl) {
-  window.Aquarae = new AveragePath({ canvasDom, width, height })
+  window.Aquarae = new AveragePath({ canvasDom })
   Aquarae.start()
 } else {
   const warning = Detector.getWebGLErrorMessage()
@@ -21,6 +19,10 @@ if (Detector.webgl) {
 // HMR setting
 if (config.env === 'development' && module.hot) {
   module.hot.accept('./main', () => {
-    averagePath.reload()
+    Aquarae.reload()
   })
 }
+
+window.addEventListener('resize', () => {
+  Aquarae.reload()
+})

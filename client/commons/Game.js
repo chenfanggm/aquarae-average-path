@@ -5,23 +5,15 @@ import ObjectManager from './ObjectManager';
 
 class Game {
   constructor(opts = {}) {
-    const { canvasDom, width, height } = opts
+    const { canvasDom } = opts
 
     this.curScene = null
     this.runningLoop = null
     this.canvasDom = canvasDom
-    this.width = width
-    this.height = height
-    this.devicePixelRatio = window.devicePixelRatio || 1
-    this.bgColor = 0xDDDDDD
-
     // renderer
     this.renderer = new THREE.WebGLRenderer({ antialias: true })
     this.renderer.gammaInput = true
     this.renderer.gammaOutput = true
-    this.renderer.setSize(this.width, this.height)
-    this.renderer.setClearColor(this.bgColor, 1)
-
     // utils
     this.clock = new THREE.Clock()
     this.objects = new ObjectManager()
@@ -63,7 +55,7 @@ class Game {
 
   render() {
     this.curScene.render()
-    this.renderer.render(this.curScene.scene, this.mainCamera)
+    this.renderer.render(this.curScene.scene, this.curScene.mainCamera)
   }
 
   clear() {
