@@ -1,6 +1,6 @@
 // TODO: This should be replaced with the checking code from http://get.webgl.org
 // they have better supprot messages for different browsers
-var Detector={
+const Detector={
 	canvas:!!window.CanvasRenderingContext2D,
 	webgl:(function(){
 		try{
@@ -38,3 +38,5 @@ var Detector={
 		document.body.insertBefore(element, document.body.childNodes[0]);
 	}
 };
+
+export default Detector

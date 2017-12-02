@@ -8,23 +8,30 @@ import BigBall from '../../../models/BigBall'
 class MainScene extends Scene {
 
   init() {
-    this.objects.add(new BigBall('bigBall'))
+    // controller
+    this.cameraControls = new THREE.OrbitAndPanControls(Aquarae.mainCamera, Aquarae.renderer.domElement)
+    this.cameraControls.target.set(0,0,0)
+
+    // objects
+    this.objects.add('bigBall', new BigBall())
 
     const ambientLight = new THREE.AmbientLight(0xFFFFFF)
     ambientLight.position.set(100, 100, 100)
-    this.scene.add(ambientLight)
+    this.objects.add('ambientLight', ambientLight)
 
     const directionalLight = new THREE.DirectionalLight(0xFFFFFF, 0.8)
     directionalLight.position.set(100, 100, 100 )
     directionalLight.target = this.objects.get('bigBall')
-    this.scene.add(directionalLight)
+    this.objects.add('directionalLight', directionalLight)
 
     // init game object
     super.init()
   }
 
-  render() {
-    super.render()
+  update() {
+    const delta = Aquarae.clock.getDelta()
+    this.cameraControls.update(delta)
+    super.update()
   }
 }
 

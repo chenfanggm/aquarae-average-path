@@ -1,5 +1,5 @@
 
-class ObjectService {
+class ObjectManager {
   constructor() {
     this.objs = {}
   }
@@ -20,6 +20,10 @@ class ObjectService {
     }
   }
 
+  remove(id) {
+    delete this.objs[id]
+  }
+
   get(id) {
     if (this.objs[id]) return this.objs[id]
     throw new Error(`not existing object with id: ${id}`)
@@ -34,4 +38,4 @@ class ObjectService {
   }
 }
 
-export default ObjectService
+export default ObjectManager

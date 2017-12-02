@@ -2,9 +2,16 @@ import * as THREE from 'three'
 
 
 class GameObject extends THREE.Object3D {
-  constructor(name) {
+  constructor() {
     super()
-    this.name = name
+  }
+
+  init() {
+    throw new Error('Every game object must implement an init function')
+  }
+
+  update() {
+    throw new Error('Every game object must implement a render function')
   }
 }
 

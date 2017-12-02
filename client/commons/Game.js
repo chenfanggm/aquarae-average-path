@@ -1,5 +1,6 @@
 import * as THREE from 'three'
 import SceneManager from './SceneManager';
+import ObjectManager from './ObjectManager';
 
 
 class Game {
@@ -9,10 +10,10 @@ class Game {
     this.curScene = null
     this.runningLoop = null
     this.canvasDom = canvasDom
-    this.bgColor = 0xDDDDDD
     this.width = width
     this.height = height
     this.devicePixelRatio = window.devicePixelRatio || 1
+    this.bgColor = 0xDDDDDD
 
     // renderer
     this.renderer = new THREE.WebGLRenderer({ antialias: true })
@@ -21,22 +22,13 @@ class Game {
     this.renderer.setSize(this.width, this.height)
     this.renderer.setClearColor(this.bgColor, 1)
 
-    // camera
-    this.cameraFov = 45
-    this.cameraAspect = this.width/this.height
-    this.cameraNear = 0.1
-    this.cameraFar = 4000
-    this.camera = new THREE.PerspectiveCamera(this.cameraFov, this.cameraAspect, this.cameraNear, this.cameraFar)
-    this.camera.position.set(20, 20, 70)
-    this.cameraControls = new THREE.OrbitAndPanControls(this.camera, this.renderer.domElement)
-    this.cameraControls.target.set(0,0,0)
-
+    // utils
     this.clock = new THREE.Clock()
+    this.objects = new ObjectManager()
+    this.sceneManager = new SceneManager()
     this.textureLoader = new THREE.TextureLoader()
 
-    this.sceneManager = new SceneManager()
-
-    this.animate = this.animate.bind(this)
+    this.loop = this.loop.bind(this)
   }
 
   reload() {
@@ -46,7 +38,7 @@ class Game {
 
   start() {
     this.init()
-    this.runningLoop = this.animate()
+    this.loop()
     console.info('Game started...')
   }
 
@@ -54,20 +46,24 @@ class Game {
     this.sceneManager.getAll().forEach((scene) => {
       scene.init()
     })
+    this.update()
     this.render()
     this.canvasDom.appendChild(this.renderer.domElement)
   }
 
-  animate() {
-    this.runningLoop = window.requestAnimationFrame(this.animate)
+  loop() {
+    this.runningLoop = window.requestAnimationFrame(this.loop)
+    this.update()
     this.render()
   }
 
+  update() {
+    this.curScene.update()
+  }
+
   render() {
-    const delta = this.clock.getDelta()
-    this.cameraControls.update(delta)
     this.curScene.render()
-    this.renderer.render(this.curScene.scene, this.camera)
+    this.renderer.render(this.curScene.scene, this.mainCamera)
   }
 
   clear() {

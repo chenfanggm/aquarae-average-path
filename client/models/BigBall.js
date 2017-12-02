@@ -2,9 +2,9 @@ import * as THREE from 'three'
 import GameObject from "../commons/GameObject";
 
 
-class BigBall extends GameObject{
-  constructor(name) {
-    super(name)
+class BigBall extends GameObject {
+  constructor() {
+    super()
     const material = new THREE.MeshPhongMaterial({
       color: 0x80FC66,
       specular: 0xFFFFFF,
@@ -15,14 +15,9 @@ class BigBall extends GameObject{
     this.mesh = new THREE.Mesh(new THREE.SphereGeometry( 15, 16, 16 ), material )
   }
 
-  init(scene) {
-    scene.add(this.mesh)
-  }
+  init() {}
 
-  render(scene) {
-    if (!this.hidden) {
-      scene.add(this.mesh)
-    }
+  update() {
     this.mesh.position.x += 1
   }
 }

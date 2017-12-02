@@ -10,8 +10,8 @@ const width = window.innerWidth/1.2
 const height = window.innerHeight/1.2
 
 if (Detector.webgl) {
-  const averagePath = new AveragePath({ canvasDom, width, height })
-  averagePath.start()
+  window.Aquarae = new AveragePath({ canvasDom, width, height })
+  Aquarae.start()
 } else {
   const warning = Detector.getWebGLErrorMessage()
   document.getElementById('mainCanvas').appendChild(warning)

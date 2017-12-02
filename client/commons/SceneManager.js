@@ -1,4 +1,4 @@
-class SceneService {
+class SceneManager {
   constructor() {
     this.scenes = {}
   }
@@ -22,4 +22,4 @@ class SceneService {
 
 }
 
-export default SceneService
+export default SceneManager
