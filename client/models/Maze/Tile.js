@@ -1,5 +1,5 @@
 import * as THREE from 'three'
-
+import GameObject from '../../commons/GameObject';
 
 
 export const TILE_TYPE = {
@@ -9,24 +9,23 @@ export const TILE_TYPE = {
 
 const TILE_META = {
   ground: {
-    color: '0xd3d3d3'
+    color: 0xd3d3d3
   },
   wall: {
-    color: '0x3c3c3c'
+    color: 0xffff00
   }
 }
 
-const tileSize = 1
-const tileBlockGeometry = new THREE.BoxBufferGeometry(tileSize, tileSize, tileSize)
-const wallBlockMaterial = new THREE.MeshBasicMaterial({color: 0x00ff00})
 
-class Tile {
-  constructor(row, col, type = TILE_TYPE.GROUND) {
+class Tile extends GameObject {
+  constructor(origin, row, col, type = TILE_TYPE.GROUND) {
+    super()
+    this.origin = origin
     this.row = row
     this.col = col
     this.type = type
+    this.size = 1
     this.meta = TILE_META[this.type]
-    this.size = tileSize
 
     for (let key in this.meta) {
       if (this.meta.hasOwnProperty(key)) {
@@ -35,14 +34,41 @@ class Tile {
     }
   }
 
-  getTileBlock(origin) {
+  init() {
+    this.mesh = this.getTileBlockMesh()
+    super.init()
+  }
+
+  update() {
+    super.update()
+  }
+  
+  render(scene) {
+    if (this.hidden) return this.clear()
+    if (this.mesh) {
+      scene.add(this.mesh)
+    }
+    super.render(scene)
+  }
+
+  clear() {
+    Aquarae.curScene.remove(this.mesh)
+    super.clear()
+  }
+
+  getTileBlockMesh() {
+    const tileBlockGeometry = new THREE.BoxBufferGeometry(this.size, this.size, this.size)
+    const wallBlockMaterial = new THREE.MeshBasicMaterial({ color: this.color })
+    const block = new THREE.Mesh(tileBlockGeometry, wallBlockMaterial)
+    const halfTileSize = this.size/2
+
     switch (this.type) {
       case TILE_TYPE.WALL:
-        const block = new THREE.Mesh(tileBlockGeometry, wallBlockMaterial)
-        block.position.set(origin.x + this.col + tileSize/2, tileSize/2, origin.z + this.row + tileSize/2)
+        block.position.set(this.origin.x + this.col + halfTileSize, halfTileSize, this.origin.z + this.row + halfTileSize)
         return block
         break
       default:
+        return null
         break
     }
   }

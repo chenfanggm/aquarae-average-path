@@ -7,15 +7,31 @@ class GameObject extends THREE.Object3D {
   }
 
   init() {
-    throw new Error('Every game object must implement an init function')
+    this.children.forEach((obj) => {
+      if (obj instanceof GameObject && typeof obj.init === 'function')
+        obj.init()
+    })
   }
 
   update() {
-    throw new Error('Every game object must implement a update function')
+    this.children.forEach((obj) => {
+      if (obj instanceof GameObject && typeof obj.update === 'function')
+        obj.update()
+    })
   }
 
-  render() {
-    throw new Error('Every game object must implement a render function')
+  render(scene) {
+    this.children.forEach((obj) => {
+      if (obj instanceof GameObject && typeof obj.render === 'function')
+        obj.render(scene)
+    })
+  }
+
+  clear() {
+    this.children.forEach((obj) => {
+      if (obj instanceof GameObject && typeof obj.clear === 'function')
+        obj.clear()
+    })
   }
 }
 
