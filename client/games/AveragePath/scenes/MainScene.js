@@ -3,9 +3,9 @@ import * as THREE from 'three'
 import helper from '../../../utils/helper'
 import '../../../libs/OrbitAndPanControls.new'
 import Scene from '../../../commons/Scene'
-import Maze from '../../../models/Maze'
-import AmbientLight from "../../../models/AmbientLight";
-import DirectionalLight from "../../../models/DirectionalLight";
+import Maze from '../../../objects/Maze'
+import AmbientLight from "../../../objects/AmbientLight";
+import DirectionalLight from "../../../objects/DirectionalLight";
 
 
 class MainScene extends Scene {
