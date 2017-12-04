@@ -1,19 +1,20 @@
 import * as THREE from 'three'
-import GameObject from '../commons/GameObject';
+import GameObject from '../commons/GameObject'
+import sceneManager from '../commons/sceneManager'
 
 
 class AmbientLight extends GameObject {
-  constructor(opts = {}) {
-    super()
-
+  constructor(id, opts = {}) {
+    super(id)
     this.color = opts.color || 0xFFFFFF
-    this.mesh = new THREE.AmbientLight(this.color)
+    this.intensity = opts.intensity || 1
     if (opts.position) {
       this.position.set(opts.position.x, opts.position.y, opts.position.z)
     }
   }
 
   init() {
+    this.mesh = new THREE.AmbientLight(this.color, this.intensity)
     this.mesh.position.set(this.position.x, this.position.y, this.position.z)
     super.init()
   }
@@ -23,15 +24,14 @@ class AmbientLight extends GameObject {
     super.update()
   }
 
-  render(scene) {
+  render() {
     if (this.hidden) return this.clear()
-
-    scene.add(this.mesh)
-    super.render(scene)
+    sceneManager.getCurScene().add(this.mesh)
+    super.render()
   }
 
   clear() {
-    Aquarae.curScene.remove(this.mesh)
+    sceneManager.getCurScene().remove(this.mesh)
     super.clear()
   }
 }

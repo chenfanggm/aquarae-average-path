@@ -1,11 +1,11 @@
 import * as THREE from 'three'
 import GameObject from '../commons/GameObject';
+import sceneManager from '../commons/sceneManager'
 
 
-class AmbientLight extends GameObject {
+class Template extends GameObject {
   constructor() {
     super()
-
   }
 
   init() {
@@ -16,14 +16,14 @@ class AmbientLight extends GameObject {
     super.update()
   }
 
-  render(scene) {
-    super.render(scene)
+  render() {
+    super.render()
   }
 
   clear() {
-    Aquarae.curScene.remove(this.mesh)
+    sceneManager.getCurScene().remove(this.mesh)
     super.clear()
   }
 }
 
-export default AmbientLight
+export default Template

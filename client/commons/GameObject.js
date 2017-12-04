@@ -1,9 +1,13 @@
 import * as THREE from 'three'
+import objectManager from './objectManager'
+import sceneManager from './sceneManager'
 
 
 class GameObject extends THREE.Object3D {
-  constructor() {
+  constructor(id) {
     super()
+    this.name = id || ''
+    objectManager.add(id || this.id, this)
   }
 
   init() {
@@ -20,17 +24,17 @@ class GameObject extends THREE.Object3D {
     })
   }
 
-  render(scene) {
+  render() {
     this.children.forEach((obj) => {
       if (obj instanceof GameObject && typeof obj.render === 'function')
-        obj.render(scene)
+        obj.render(sceneManager.getCurScene())
     })
   }
 
   clear() {
     this.children.forEach((obj) => {
       if (obj instanceof GameObject && typeof obj.clear === 'function')
-        obj.clear()
+        obj.clear(sceneManager.getCurScene())
     })
   }
 }

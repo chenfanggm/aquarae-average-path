@@ -1,62 +1,43 @@
 import dat from 'dat-gui'
 import * as THREE from 'three'
-import helper from '../../../utils/helper'
 import '../../../libs/OrbitAndPanControls.new'
 import Scene from '../../../commons/Scene'
 import Maze from '../../../objects/Maze'
-import AmbientLight from "../../../objects/AmbientLight";
-import DirectionalLight from "../../../objects/DirectionalLight";
+import AmbientLight from '../../../objects/AmbientLight'
+import DirectionalLight from '../../../objects/DirectionalLight'
+import objectManager from '../../../commons/objectManager'
+import stateManager from '../../../commons/stateManager'
 
 
 class MainScene extends Scene {
-
-  constructor() {
-    super()
-    // camera
-    this.cameraFov = 45
-    this.cameraNear = 0.1
-    this.cameraFar = 1000
-    this.cameraAspect = Aquarae.width/Aquarae.height
-    this.cameraPosition = new THREE.Vector3(0, 50, 40)
-    // objects
-    this.mazeWidth = 50
-    this.mazeHeight = 50
-  }
-
   init() {
     // camera
-    this.mainCamera = new THREE.PerspectiveCamera(this.cameraFov, this.cameraAspect, this.cameraNear, this.cameraFar)
-    this.mainCamera.position.set(this.cameraPosition.x, this.cameraPosition.y, this.cameraPosition.z)
-    this.mainCamera.lookAt(0, 0, 0)
-
-    // controller
-    this.cameraControls = new THREE.OrbitAndPanControls(this.mainCamera, Aquarae.renderer.domElement)
+    const mainCamera = objectManager.get('mainCamera')
+    mainCamera.position.set(0, 50, 40)
+    mainCamera.lookAt(0, 0, 0)
+    const renderer = objectManager.get('renderer')
+    this.cameraControls = new THREE.OrbitAndPanControls(mainCamera, renderer.domElement)
     this.cameraControls.target.set(0, 0, 5)
-
     // resources
-    this.add('maze', new Maze({ width: this.mazeWidth, height: this.mazeHeight }))
-    this.add('ambientLight', new AmbientLight({ position: new THREE.Vector3(100, 100, 100) }))
-    this.add('directionalLight', new DirectionalLight({
+    const mazeWidth = 50
+    const mazeHeight = 50
+    this.add(new Maze('maze', { width: mazeWidth, height: mazeHeight }))
+    this.add(new AmbientLight('ambientLight', { position: new THREE.Vector3(100, 100, 100) }))
+    this.add(new DirectionalLight('directionalLight', {
       position: new THREE.Vector3(100, 100, 100),
-      target: this.objects.get('maze')
+      target: objectManager.get('maze')
     }))
-
-    // helper
-    this.setupHelper(true)
-    // init everything in this.objects
     super.init()
   }
 
   update() {
-    const delta = Aquarae.clock.getDelta()
+    const delta = stateManager.getClock().getDelta()
     this.cameraControls.update(delta)
     super.update()
   }
 
-  setupHelper(isOn) {
-    if (isOn) {
-      helper.renderOriginIndicator(this.scene)
-    }
+  render() {
+    super.render()
   }
 }
 

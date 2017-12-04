@@ -195,7 +195,7 @@ if (__PROD__) {
   webpackConfig.plugins.push(
     new webpack.LoaderOptionsPlugin({
       minimize: true,
-      debug: false,
+      isDebug: false,
     }),
     new webpack.optimize.ModuleConcatenationPlugin(),
     new webpack.optimize.UglifyJsPlugin({

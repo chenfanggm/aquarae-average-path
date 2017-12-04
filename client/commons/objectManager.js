@@ -38,4 +38,5 @@ class ObjectManager {
   }
 }
 
-export default ObjectManager
+const objectManager = new ObjectManager()
+export default objectManager

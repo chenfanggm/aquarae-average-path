@@ -1,5 +1,6 @@
 import * as THREE from 'three'
 import GameObject from '../../commons/GameObject';
+import sceneManager from '../../commons/sceneManager'
 
 
 export const TILE_TYPE = {
@@ -43,16 +44,16 @@ class Tile extends GameObject {
     super.update()
   }
   
-  render(scene) {
+  render() {
     if (this.hidden) return this.clear()
     if (this.mesh) {
-      scene.add(this.mesh)
+      sceneManager.getCurScene().add(this.mesh)
     }
-    super.render(scene)
+    super.render()
   }
 
   clear() {
-    Aquarae.curScene.remove(this.mesh)
+    sceneManager.getCurScene().remove(this.mesh)
     super.clear()
   }
 

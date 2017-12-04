@@ -1,4 +1,5 @@
 import * as THREE from 'three'
+import sceneManager from '../commons/sceneManager'
 
 
 const material = new THREE.MeshBasicMaterial({
@@ -9,8 +10,8 @@ const material = new THREE.MeshBasicMaterial({
 const ORINGIN_INDICATOR = new THREE.Mesh(new THREE.SphereGeometry(0.5, 100, 100), material )
 
 
-export const renderOriginIndicator = (scene) => {
-  scene.add(ORINGIN_INDICATOR)
+export const renderOriginIndicator = () => {
+  sceneManager.getCurScene().add(ORINGIN_INDICATOR)
 }
 
 export default {

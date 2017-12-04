@@ -1,11 +1,12 @@
 import * as THREE from 'three'
 import GameObject from '../../commons/GameObject'
 import Tile, { TILE_TYPE } from './Tile'
+import sceneManager from '../../commons/sceneManager'
 
 
 class Maze extends GameObject {
-  constructor({width, height}) {
-    super()
+  constructor(id, {width, height}) {
+    super(id)
     this.tileMap = null
     this.tiles = null
     this.ground = null
@@ -32,16 +33,14 @@ class Maze extends GameObject {
 
   update() {}
 
-  render(scene) {
+  render() {
     if (this.hidden) return this.clear()
-
-    // render objects
-    scene.add(this.ground)
-    super.render(scene)
+    sceneManager.getCurScene().add(this.ground)
+    super.render()
   }
 
   clear() {
-    Aquarae.curScene.remove(this.ground)
+    sceneManager.getCurScene().remove(this.ground)
     super.clear()
   }
 

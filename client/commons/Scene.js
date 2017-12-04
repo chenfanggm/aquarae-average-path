@@ -1,24 +1,30 @@
 import * as THREE from 'three'
-import ObjectManager from './ObjectManager';
-import GameObject from './GameObject';
+import helper from '../utils/helper'
+import GameObject from './GameObject'
+import sceneManager from '../commons/sceneManager'
+import objectManager from '../commons/objectManager'
 
 
-class Scene {
-  constructor() {
-    this.scene = new THREE.Scene()
-    this.objects = new ObjectManager()
+class Scene extends THREE.Scene {
+  constructor(id) {
+    super()
+    this.name = id || ''
+    sceneManager.add(id || this.id, this)
   }
 
   init() {
-    this.objects.getAll().forEach((obj) => {
+    objectManager.getAll().forEach((obj) => {
       if (obj instanceof GameObject && typeof obj.init === 'function') {
         obj.init()
       }
     })
+    if (__DEBUG__) {
+      this.setupHelper()
+    }
   }
 
   update() {
-    this.objects.getAll().forEach((obj) => {
+    objectManager.getAll().forEach((obj) => {
       if (obj instanceof GameObject && typeof obj.update === 'function') {
         obj.update()
       }
@@ -26,41 +32,26 @@ class Scene {
   }
 
   render() {
-    this.objects.getAll().forEach((obj) => {
-      if (obj instanceof GameObject) {
-        obj.render(this.scene)
-      } else if (!obj.hidden) {
-        this.scene.add(obj)
-      } else {
-        this.scene.remove(obj)
+    objectManager.getAll().forEach((obj) => {
+      if (obj instanceof GameObject && typeof obj.render === 'function') {
+        obj.render(this)
       }
     })
   }
 
-  add(id, object) {
-    this.objects.add(id, object)
-    Aquarae.objects.add(id, object)
-  }
-
-  remove(id) {
-    this.objects.remove(id)
-    Aquarae.objects.remove(id)
-  }
-
   clear() {
-    // remove scene objects from scene
-    if (this.scene.children) {
-      this.scene.children.forEach((obj) => {
-        this.scene.remove(obj)
+    // remove objects from scene
+    if (this.children) {
+      this.children.forEach((obj) => {
+        this.remove(obj)
       })
     }
+    // remove objects from pool
+    objectManager.clearAll()
+  }
 
-    // remove all objects from pool
-    this.objects.clearAll()
-    Aquarae.objects.clearAll()
-
-    // reset scene
-    this.scene = new THREE.Scene()
+  setupHelper() {
+    helper.renderOriginIndicator(this)
   }
 }
 

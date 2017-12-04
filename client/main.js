@@ -4,12 +4,15 @@ import config from '../config'
 import Detector from './libs/Detector'
 import AveragePath from './games/AveragePath'
 
+// global debug flag
+window.__DEBUG__ = true
 
+// setup game
 const canvasDom = document.getElementById('mainCanvas')
-
+let game = null
 if (Detector.webgl) {
-  window.Aquarae = new AveragePath({ canvasDom })
-  Aquarae.start()
+  game = new AveragePath({ canvasDom })
+  game.start()
 } else {
   const warning = Detector.getWebGLErrorMessage()
   document.getElementById('mainCanvas').appendChild(warning)
@@ -19,10 +22,10 @@ if (Detector.webgl) {
 // HMR setting
 if (config.env === 'development' && module.hot) {
   module.hot.accept('./main', () => {
-    Aquarae.reload()
+    game.reload()
   })
 }
 
 window.addEventListener('resize', () => {
-  Aquarae.reload()
+  game.reload()
 })
