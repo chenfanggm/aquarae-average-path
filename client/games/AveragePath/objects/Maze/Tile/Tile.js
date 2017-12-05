@@ -37,7 +37,7 @@ class Tile extends GameObject {
   }
 
   init() {
-    this.tileBlockTexture = loadingManager.load('/textures/tile_wood_crate.jpg')
+    this.tileBlockTexture = loadingManager.load('/textures/box/box_wood.jpg')
     this.mesh = this.getTileBlockMesh()
     super.init()
   }

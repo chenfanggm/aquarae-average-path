@@ -2,6 +2,7 @@ import * as THREE from 'three'
 import GameObject from '../../../../commons/GameObject'
 import Tile, { TILE_TYPE } from './Tile/Tile'
 import sceneManager from '../../../../commons/managers/sceneManager'
+import loadingManager from '../../../../commons/managers/loadingManager'
 
 
 class Maze extends GameObject {
@@ -17,8 +18,11 @@ class Maze extends GameObject {
 
   init() {
     // maze ground
+    const tileGroundTexture = loadingManager.load('/textures/tile/tile_stone.jpg')
+    tileGroundTexture.wrapS = tileGroundTexture.wrapT = THREE.RepeatWrapping
+    tileGroundTexture.repeat.set(this.width / 4, this.height / 4)
     const mazeGeometry = new THREE.PlaneBufferGeometry(this.width, this.height).rotateX(-Math.PI / 2)
-    const mazeMaterial = new THREE.MeshBasicMaterial({color: 0x3c3c3c, side: THREE.DoubleSide})
+    const mazeMaterial = new THREE.MeshBasicMaterial({map: tileGroundTexture, side: THREE.DoubleSide})
     this.ground = new THREE.Mesh(mazeGeometry, mazeMaterial)
     this.ground.position.setY(-0.01)
 
