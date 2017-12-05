@@ -1,7 +1,7 @@
 import * as THREE from 'three'
 import GameObject from '../../../../commons/GameObject'
-import Tile, { TILE_TYPE } from './Tile'
-import sceneManager from '../../../../commons/sceneManager'
+import Tile, { TILE_TYPE } from './Tile/Tile'
+import sceneManager from '../../../../commons/managers/sceneManager'
 
 
 class Maze extends GameObject {

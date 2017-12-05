@@ -2,11 +2,11 @@ import dat from 'dat-gui'
 import * as THREE from 'three'
 import '../../../commons/libs/OrbitAndPanControls.new'
 import Scene from '../../../commons/Scene'
-import Maze from '../objects/Maze'
+import Maze from '../objects/Maze/Maze'
 import AmbientLight from '../objects/AmbientLight'
 import DirectionalLight from '../objects/DirectionalLight'
-import objectManager from '../../../commons/objectManager'
-import stateManager from '../../../commons/stateManager'
+import objectManager from '../../../commons/managers/objectManager'
+import stateManager from '../../../commons/managers/stateManager'
 
 
 class MainScene extends Scene {

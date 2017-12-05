@@ -1,5 +1,5 @@
 import * as THREE from 'three'
-import objectManager from './objectManager'
+import objectManager from './managers/objectManager'
 
 
 class GameObject extends THREE.Object3D {

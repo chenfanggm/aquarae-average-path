@@ -1,6 +1,6 @@
 import * as THREE from 'three'
 import GameObject from '../../../commons/GameObject'
-import sceneManager from '../../../commons/sceneManager'
+import sceneManager from '../../../commons/managers/sceneManager'
 
 
 class AmbientLight extends GameObject {

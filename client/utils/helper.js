@@ -1,5 +1,5 @@
 import * as THREE from 'three'
-import sceneManager from '../commons/sceneManager'
+import sceneManager from '../commons/managers/sceneManager'
 
 
 const material = new THREE.MeshBasicMaterial({

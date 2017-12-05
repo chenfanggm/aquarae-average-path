@@ -1,32 +1,14 @@
 import * as THREE from 'three'
-import objectManager from './objectManager'
-import sceneManager from './sceneManager'
+import objectManager from './managers/objectManager'
+import sceneManager from './managers/sceneManager'
 
 
 class Game {
   constructor(opts = {}) {
-    const { canvasDom, width, height } = opts
+    const { canvasDom } = opts
     // meta
     this.runningLoop = null
     this.canvasDom = canvasDom
-    this.width = width || window.innerWidth/1.2
-    this.height = height || window.innerHeight/1.2
-    this.bgColor = 0xDDDDDD
-    this.devicePixelRatio = window.devicePixelRatio || 1
-    // camera
-    this.cameraFov = 45
-    this.cameraNear = 0.1
-    this.cameraFar = 1000
-    this.cameraAspect = this.width / this.height
-    this.mainCamera = new THREE.PerspectiveCamera(this.cameraFov, this.cameraAspect, this.cameraNear, this.cameraFar)
-    objectManager.add('mainCamera', this.mainCamera)
-    // renderer
-    this.renderer = new THREE.WebGLRenderer({ antialias: true })
-    this.renderer.gammaInput = true
-    this.renderer.gammaOutput = true
-    this.renderer.setSize(this.width, this.height)
-    this.renderer.setClearColor(this.bgColor, 1)
-    objectManager.add('renderer', this.renderer)
     // bind
     this.loop = this.loop.bind(this)
   }

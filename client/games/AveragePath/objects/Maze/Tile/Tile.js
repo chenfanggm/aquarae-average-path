@@ -1,6 +1,7 @@
 import * as THREE from 'three'
-import GameObject from '../../../../commons/GameObject';
-import sceneManager from '../../../../commons/sceneManager'
+import GameObject from '../../../../../commons/GameObject';
+import sceneManager from '../../../../../commons/managers/sceneManager'
+import loadingManager from '../../../../../commons/managers/loadingManager'
 
 
 export const TILE_TYPE = {
@@ -36,6 +37,7 @@ class Tile extends GameObject {
   }
 
   init() {
+    this.tileBlockTexture = loadingManager.load('/textures/tile_wood_crate.jpg')
     this.mesh = this.getTileBlockMesh()
     super.init()
   }
@@ -59,8 +61,8 @@ class Tile extends GameObject {
 
   getTileBlockMesh() {
     const tileBlockGeometry = new THREE.BoxBufferGeometry(this.size, this.size, this.size)
-    const wallBlockMaterial = new THREE.MeshBasicMaterial({ color: this.color })
-    const block = new THREE.Mesh(tileBlockGeometry, wallBlockMaterial)
+    const tileBlockMaterial = new THREE.MeshBasicMaterial({ map: this.tileBlockTexture })
+    const block = new THREE.Mesh(tileBlockGeometry, tileBlockMaterial)
     const halfTileSize = this.size/2
 
     switch (this.type) {

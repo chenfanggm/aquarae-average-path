@@ -1,8 +1,8 @@
 import * as THREE from 'three'
 import helper from '../utils/helper'
 import GameObject from './GameObject'
-import sceneManager from '../commons/sceneManager'
-import objectManager from '../commons/objectManager'
+import sceneManager from './managers/sceneManager'
+import objectManager from './managers/objectManager'
 
 
 class Scene extends THREE.Scene {
