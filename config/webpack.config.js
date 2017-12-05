@@ -3,7 +3,7 @@ const webpack = require('webpack')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const ExtractTextPlugin = require('extract-text-webpack-plugin')
 const debug = require('debug')('app:config:webpack')
-const config = require('../config')
+const config = require('./index')
 
 const paths = config.pathUtil
 const __DEV__ = config.compilerGlobals.__DEV__

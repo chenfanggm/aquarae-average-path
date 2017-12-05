@@ -1,6 +1,5 @@
 import * as THREE from 'three'
 import objectManager from './objectManager'
-import sceneManager from './sceneManager'
 
 
 class GameObject extends THREE.Object3D {
@@ -27,14 +26,14 @@ class GameObject extends THREE.Object3D {
   render() {
     this.children.forEach((obj) => {
       if (obj instanceof GameObject && typeof obj.render === 'function')
-        obj.render(sceneManager.getCurScene())
+        obj.render()
     })
   }
 
   clear() {
     this.children.forEach((obj) => {
       if (obj instanceof GameObject && typeof obj.clear === 'function')
-        obj.clear(sceneManager.getCurScene())
+        obj.clear()
     })
   }
 }

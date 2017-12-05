@@ -1,7 +1,7 @@
-import './styles/main.scss'
+import './statics/main.scss'
 import './normalize'
 import config from '../config'
-import Detector from './libs/Detector'
+import Detector from './commons/libs/Detector'
 import AveragePath from './games/AveragePath'
 
 // global debug flag

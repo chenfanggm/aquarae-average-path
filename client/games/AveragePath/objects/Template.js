@@ -1,6 +1,6 @@
 import * as THREE from 'three'
-import GameObject from '../commons/GameObject';
-import sceneManager from '../commons/sceneManager'
+import GameObject from '../../../commons/GameObject';
+import sceneManager from '../../../commons/sceneManager'
 
 
 class Template extends GameObject {

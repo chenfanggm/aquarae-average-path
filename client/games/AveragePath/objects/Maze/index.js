@@ -1,7 +1,7 @@
 import * as THREE from 'three'
-import GameObject from '../../commons/GameObject'
+import GameObject from '../../../../commons/GameObject'
 import Tile, { TILE_TYPE } from './Tile'
-import sceneManager from '../../commons/sceneManager'
+import sceneManager from '../../../../commons/sceneManager'
 
 
 class Maze extends GameObject {
@@ -22,6 +22,7 @@ class Maze extends GameObject {
     this.ground = new THREE.Mesh(mazeGeometry, mazeMaterial)
     this.ground.position.setY(-0.01)
 
+    // tiles
     const tileMap = this.generateTileMap(this.width, this.height)
     this.tileMap = tileMap.map
     this.tiles = tileMap.tiles
@@ -31,7 +32,9 @@ class Maze extends GameObject {
     super.init()
   }
 
-  update() {}
+  update() {
+    super.update()
+  }
 
   render() {
     if (this.hidden) return this.clear()
